@@ -1,0 +1,31 @@
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include "resource.h"
+
+
+IDI_MAIN_ICON   ICON    "icon.ico"
+
+
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+IDD_DIALOG1 DIALOG 0, 0, 260, 185
+STYLE DS_3DLOOK | DS_CENTER | DS_SHELLFONT | WS_VISIBLE | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_GROUP | WS_SYSMENU
+CAPTION "ByteInjector"
+FONT 8, "Arial"
+BEGIN
+    EDITTEXT        IDC_EDIT_DLL, 25, 15, 225, 14, ES_AUTOHSCROLL
+	LTEXT           "Dll to inject:", IDC_STATIC, 10, 5, 39, 8, SS_LEFT
+    LTEXT           "Target process:", IDC_STATIC, 10, 35, 52, 8, SS_LEFT
+    LISTBOX         IDC_LIST_PROCESSES, 10, 45, 240, 75, WS_TABSTOP | WS_VSCROLL | LBS_NOINTEGRALHEIGHT | LBS_NOTIFY
+    PUSHBUTTON      "Refresh", IDC_BTN_REFRESH, 10, 155, 50, 14
+    PUSHBUTTON      "...", IDC_BTN_DLL, 10, 15, 13, 14
+    PUSHBUTTON      "Attach", IDC_BTN_INJECT, 200, 155, 50, 14
+    PUSHBUTTON      "Detach", IDC_BTN_UNLOAD, 145, 155, 50, 14
+    AUTOCHECKBOX    "Create target process and auto inject", IDC_CBX_AUTOINJECT, 10, 123, 135, 10
+    PUSHBUTTON      "...", IDC_BTN_PROCESS, 236, 134, 13, 14, WS_DISABLED
+    EDITTEXT        IDC_EDIT_PROCESS, 10, 135, 225, 14, WS_DISABLED | ES_AUTOHSCROLL
+END
+
+
+
