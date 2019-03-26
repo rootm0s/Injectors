@@ -1,0 +1,41 @@
+# https://blog.travis-ci.com/2018-10-11-windows-early-release
+# https://docs.travis-ci.com/user/reference/windows
+# https://chocolatey.org/packages/python
+
+# before_install: Installs Python, upgrades pip, pip installs requirements.txt
+# install: Installs run-specific tools like Flake8, py2exe, PyInstaller
+# before_script: Executes run-specific tools
+# script: Runs tests
+
+os: windows      # Windows Server, version 1803 -- Platform: Windows-10-10.0.17134-SP0
+language: shell  # 'language: python' is not yet supported on Travis CI Windows
+
+env:
+  global:
+    - PY27PATH=/c/Python27:/c/Python27/Scripts
+    - PY37PATH=/c/Python37:/c/Python37/Scripts
+
+py27-steps: &py27-steps
+  env: PATH=$PY27PATH:$PATH
+  before_install:
+    - choco install python2
+    - python -m pip install --upgrade pip
+    #- pip install -r requirements.txt
+
+py37-steps: &py37-steps
+  env: PATH=$PY37PATH:$PATH
+  before_install:
+    - choco install python
+    - python -m pip install --upgrade pip
+    #- pip install -r requirements.txt
+
+matrix:
+  include:
+    - name: "Py2: Run tests"
+      <<: *py27-steps
+    - name: "Py3: Run tests"
+      <<: *py37-steps
+
+install: pip install flake8
+before_script: flake8 . --count --select=E9,F401,F63,F72,F82 --show-source --statistics
+script: true
